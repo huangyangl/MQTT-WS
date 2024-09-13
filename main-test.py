@@ -2,22 +2,19 @@
 
 import asyncio
 from mavsdk import System
-import subprocess  
-import os  
-import signal  
+import subprocess    
 import time  
 from datetime import datetime
-import json  
 import math  
 import paho.mqtt.client as mqtt 
 
-# EXE程序的路径  
+# EXE程序的路径
 exe_mavproxy_path = ".\\MAVProxy\\mavproxy --master=com14 --out=udp:127.0.0.1:14540 --out=udp:127.0.0.1:14550  --no-console"
 exe_mavsdk_path = '.\\mavsdk_server_win32  -p 50051'
 system_address="udp://:14540"
-# MQTT服务器地址  
+# MQTT服务器地址
 MQTT_BROKER = "47.113.112.74"
-MQTT_PORT = 1883  
+MQTT_PORT = 1883
 SUB_TOPIC = "cmd"
 PUB_TOPIC = "copter"
 MQTT_USERNAME = "shd01"  # 用户名
@@ -157,7 +154,7 @@ async def run():
 
         # 业务代码主循环
         while True:
-            await asyncio.sleep(1)
+            await asyncio.sleep(1) # 更新飞机数据
             current_timestamp = datetime.now().timestamp()
             data['timestamp']=math.floor(current_timestamp*1000)
             #print(f"json: {data}")
