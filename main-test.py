@@ -9,7 +9,8 @@ import math
 import paho.mqtt.client as mqtt 
 
 # EXE程序的路径
-exe_mavproxy_path = ".\\MAVProxy\\mavproxy --master=com14 --out=udp:127.0.0.1:14540 --out=udp:127.0.0.1:14550  --no-console"
+exe_mavproxy_path = ".\\MAVProxy\\mavproxy --master=tcp:127.0.0.1:5762 --out=udp:127.0.0.1:14540 --out=udp:127.0.0.1:14550  --no-console"
+# exe_mavproxy_path = ".\\MAVProxy\\mavproxy --master=com14 --out=udp:127.0.0.1:14540 --out=udp:127.0.0.1:14550  --no-console"
 exe_mavsdk_path = '.\\mavsdk_server_win32  -p 50051'
 system_address="udp://:14540"
 # MQTT服务器地址
@@ -60,7 +61,6 @@ def kill_process_by_name(process_name):
 # 获取数据
 async def get_is_armed(drone):
     async for is_armed in drone.telemetry.armed():
-        print(f"is_armed: {is_armed}")
         data['data']['armed']=str(is_armed)
 
 async def get_in_air(drone):
@@ -70,7 +70,6 @@ async def get_in_air(drone):
 async def get_flight_mode(drone):
     async for flight_mode in drone.telemetry.flight_mode():
         data['data']['flightMode']=str(flight_mode)
-        print("FlightMode:", flight_mode)
 
 async def get_position(drone):
     async for position in drone.telemetry.position():
